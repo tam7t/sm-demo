@@ -3,19 +3,23 @@ on:
   push:
     branches:
     - main
+jobs:
+  docker:        
+    name: unit
+    runs-on: ubuntu-latest
 
-steps:
-- id: secrets
-  uses: GoogleCloudPlatform/github-actions/get-secretmanager-secrets@master
-  with:
-    credentials: ${{ secrets.gcp_credentials }}
-    secrets: |-
-      token:gcp-sm-demo-next/docker-registry-token
+    steps:
+    - id: secrets
+      uses: GoogleCloudPlatform/github-actions/get-secretmanager-secrets@master
+      with:
+        credentials: ${{ secrets.gcp_credentials }}
+        secrets: |-
+          token:gcp-sm-demo-next/docker-registry-token
 
-- id: publish
-  uses: docker/build-push-action@v1
-  with:
-    username: tam7t
-    password: ${{steps.secrets.outputs.token}}
-    repository: tam7t/dogecho
-    tags: latest
+    - id: publish
+      uses: docker/build-push-action@v1
+      with:
+        username: tam7t
+        password: ${{steps.secrets.outputs.token}}
+        repository: tam7t/dogecho
+        tags: latest
