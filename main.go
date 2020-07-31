@@ -37,7 +37,7 @@ func main() {
 	}()
 
 	// start the http server
-	http.HandleFunc("/", d.translate)
+	http.HandleFunc("/", d.bark)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -72,16 +72,16 @@ func (d *dog) loadSecret() {
 	d.VerificationToken = string(secret.GetPayload().GetData())
 }
 
-// translate handles the "/bark" slack command webhook and translates the
-// provided text into dog.
-func (d *dog) translate(w http.ResponseWriter, r *http.Request) {
+// bark handles the "/bark" slack command webhook and translates the provided
+// text into dog.
+func (d *dog) bark(w http.ResponseWriter, r *http.Request) {
 	if d.VerificationToken == "" {
 		e(w, "no secret loaded", http.StatusInternalServerError)
 		return
 	}
 
 	if r.Header.Get("content-type") != "application/x-www-form-urlencoded" {
-		e(w, "wrong content type", http.StatusBadRequest)
+		e(w, "bark", http.StatusBadRequest)
 		return
 	}
 
