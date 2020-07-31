@@ -1,3 +1,9 @@
+name: docker
+on:
+  push:
+    branches:
+    - main
+
 steps:
 - id: secrets
   uses: GoogleCloudPlatform/github-actions/get-secretmanager-secrets@master
