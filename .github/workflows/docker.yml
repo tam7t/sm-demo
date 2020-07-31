@@ -16,7 +16,7 @@ jobs:
         secrets: |-
           docker-token:projects/gcp-sm-demo-next/secrets/docker-registry-token/versions/latest
 
-    - id: Checkout code
+    - id: checkout
       uses: actions/checkout@v2
 
     - id: publish
