@@ -16,7 +16,8 @@ jobs:
         credentials: ${{ secrets.gcp_credentials }}
         secrets: |-
           token:gcp-sm-demo-next/docker-registry-token
-
+    - name: Checkout code
+      uses: actions/checkout@v2
     - id: publish
       uses: docker/build-push-action@v1
       with:
