@@ -26,7 +26,7 @@ func main() {
 	}
 
 	// occasionally reload the secret
-	ticker := time.NewTicker(30 * time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 	go func() {
 		for {
 			select {

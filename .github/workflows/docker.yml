@@ -13,15 +13,16 @@ jobs:
     - id: secrets
       uses: GoogleCloudPlatform/github-actions/get-secretmanager-secrets@master
       with:
-        credentials: ${{ secrets.gcp_credentials }}
         secrets: |-
-          token:gcp-sm-demo-next/docker-registry-token
-    - name: Checkout code
+          docker-token:projects/gcp-sm-demo-next/secrets/docker-registry-token/versions/latest
+
+    - id: Checkout code
       uses: actions/checkout@v2
+
     - id: publish
       uses: docker/build-push-action@v1
       with:
         username: tam7t
-        password: ${{steps.secrets.outputs.token}}
+        password: ${{ steps.secrets.outputs.docker-token }}
         repository: tam7t/dogecho
         tags: latest
