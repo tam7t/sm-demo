@@ -1,11 +1,11 @@
 resource "google_project_service" "secretmanager" {
   service = "secretmanager.googleapis.com"
-  disable_dependent_services = false
+  disable_on_destroy = false
 }
 
 resource "google_project_service" "run" {
   service = "run.googleapis.com"
-  disable_dependent_services = false
+  disable_on_destroy = false
 }
 
 resource "google_secret_manager_secret" "dogecho-slack" {
