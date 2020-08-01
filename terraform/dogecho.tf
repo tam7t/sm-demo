@@ -36,7 +36,7 @@ resource "google_cloud_run_service" "dogecho" {
   template {
     spec {
       containers {
-        image = "gcr.io/gcp-sm-demo-next/dogecho@sha256:b51dcf53f8d2b8bfacc99a34bf43abac2761c5e56d24baf4ee665f936abfd120"
+        image = "gcr.io/gcp-sm-demo-next/dogecho@sha256:879cb4f5687ef58540bcb1dde14b0e3bff6d87690aa5c9924d27fdc1a6ee231c"
         env {
           name  = "SECRET_RESOURCE_NAME"
           value = "${google_secret_manager_secret.dogecho-slack.id}/versions/latest"
