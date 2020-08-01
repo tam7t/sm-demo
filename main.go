@@ -80,8 +80,8 @@ func (d *dog) bark(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Header.Get("content-type") != "application/x-www-form-urlencoded" {
-		e(w, "bark", http.StatusBadRequest)
+	if subtle.ConstantTimeCompare([]byte(r.FormValue("token")), []byte(d.VerificationToken)) == 0 {
+		e(w, "slack verification failed", http.StatusUnauthorized)
 		return
 	}
 
@@ -90,17 +90,10 @@ func (d *dog) bark(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if subtle.ConstantTimeCompare([]byte(r.FormValue("token")), []byte(d.VerificationToken)) == 0 {
-		e(w, "slack verification failed", http.StatusUnauthorized)
-		return
-	}
-
 	w.Write([]byte("the dog says:"))
 	for range strings.Fields(r.FormValue("text")) {
 		w.Write([]byte(" bark"))
 	}
-
-	w.WriteHeader(http.StatusOK)
 }
 
 // e helps write HTTP error messages.
