@@ -10,6 +10,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
+    - id: secrets
+      uses: GoogleCloudPlatform/github-actions/get-secretmanager-secrets@master
+      with:
+        secrets: |-
+          docker-token:projects/122710472637/secrets/docker-registry-token/versions/latest
+
     - id: checkout
       uses: actions/checkout@v2
 
@@ -17,6 +23,6 @@ jobs:
       uses: docker/build-push-action@v1
       with:
         username: tam7t
-        password: password!
+        password: ${{ steps.secrets.outputs.docker-token }}
         repository: tam7t/dogecho
         tags: latest
